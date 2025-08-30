@@ -6,13 +6,17 @@ from groq import Groq
 load_dotenv()
 
 def git_command(command):
-    result = subprocess.run(command, shell=True, capture_output=True, text=True)
+    result = subprocess.run(command, capture_output=True, text=True)
     if result.returncode != 0:
         print("Error:", result.stderr)
     return result.stdout.strip()
 
+def check_staged_changes():
+    result = subprocess.run(["git", "diff", "--cached", "--quiet"])
+    return result.returncode != 0
+
 def get_diff():
-    diff = subprocess.run("git diff --cached", shell=True, capture_output=True, text=True).stdout
+    diff = subprocess.run(["git", "diff", "--cached"], capture_output=True, text=True).stdout
     return diff
 
 def generate_commit_message(diff):
@@ -42,22 +46,25 @@ def generate_commit_message(diff):
         temperature=0
     )
     return chat_completion.choices[0].message.content
+
 things_to_add = input("Add: ")
 print(f"Running: git add {things_to_add}")
-git_command(f"git add {things_to_add}")
+git_command(["git", "add", f"{things_to_add}"])
 print("\n")
-diff = get_diff()
-message = generate_commit_message(diff)
-print(f"Message will be: {message}")
-cont = ""
-while cont != "y" and cont != "n":
-    cont = input("Continue? (y/n) ")
-if cont == "y":
-    git_command(f"git commit -m \"{message}\"")
-    branch = input("Branch: ")
-    print(f"Pushing from origin to {branch}")
+
+if check_staged_changes():
+    diff = get_diff()
+    message = generate_commit_message(diff)
+    print(f"Message will be: {message}")
     cont = ""
     while cont != "y" and cont != "n":
         cont = input("Continue? (y/n) ")
     if cont == "y":
-        git_command(f"git push origin {branch}")
+        git_command(["git", "commit", "-m", f"\"{message}\""])
+        branch = input("Branch: ")
+        print(f"Pushing from origin to {branch}")
+        cont = ""
+        while cont != "y" and cont != "n":
+            cont = input("Continue? (y/n) ")
+        if cont == "y":
+            git_command(["git", "push", "origin", f"{branch}"])
