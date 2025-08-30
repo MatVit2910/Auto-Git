@@ -61,6 +61,7 @@ if check_staged_changes():
         cont = input("Continue? (y/n) ")
     if cont == "y":
         git_command(["git", "commit", "-m", f"\"{message}\""])
+        print("\n")
         branch = input("Branch: ")
         print(f"Pushing from origin to {branch}")
         cont = ""
