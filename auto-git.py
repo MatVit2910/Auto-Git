@@ -68,3 +68,5 @@ if check_staged_changes():
             cont = input("Continue? (y/n) ")
         if cont == "y":
             git_command(["git", "push", "origin", f"{branch}"])
+else:
+    print("No changes to commit")
