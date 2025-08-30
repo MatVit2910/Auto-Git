@@ -1,73 +1,34 @@
 import os
-import subprocess
 from dotenv import load_dotenv
-from groq import Groq
+from git_utils import run_git_command, check_staged_changes, get_staged_diff
+from llm_utils import generate_commit_message
 
 load_dotenv()
 
-def git_command(command):
-    result = subprocess.run(command, capture_output=True, text=True)
-    if result.returncode != 0:
-        print("Error:", result.stderr)
-    return result.stdout.strip()
+def main():
+    repo_path = input("Repo path (leave empty for current folder): ").strip() or None
+    things_to_add = input("Add (file/folder or . for everything): ")
+    run_git_command(["git", "add", things_to_add], repo_path)
+    print("\n")
 
-def check_staged_changes():
-    result = subprocess.run(["git", "diff", "--cached", "--quiet"])
-    return result.returncode != 0
+    if check_staged_changes(repo_path):
+        diff = get_staged_diff(repo_path)
+        message = generate_commit_message(diff)
+        print(f"Generated commit message:\n{message}\n")
 
-def get_diff():
-    diff = subprocess.run(["git", "diff", "--cached"], capture_output=True, text=True).stdout
-    return diff
-
-def generate_commit_message(diff):
-    client = Groq(
-        api_key=os.getenv("GROQ_API_KEY"),
-    )
-
-    chat_completion = client.chat.completions.create(
-        messages=[
-             {
-                "role": "system",
-                "content": '''You are an assistant that writes clear, concise, and professional 
-                Git commit messages based on a provided code diff.\n\nGuidelines:\n- Summarize 
-                the intent of the change in a single line.\n- Keep the message under 70 characters.
-                \n- Do not include file paths or raw diff content in the commit message.\n- Do not 
-                use prefixes like 'feat:', 'fix:', 'docs:'.\n- If the change is unclear, fall back 
-                to a generic but safe description like 'update code'.'''
-            },
-            {
-                "role": "user",
-                "content": f'''Here is the staged git diff:\\n\\n{diff}\\n\\nWrite a single
-                commit message that describes these changes. Follow the system rules strictly. Only 
-                output the commit message, nothing else.''',
-            }
-        ],
-        model="llama-3.3-70b-versatile",
-        temperature=0
-    )
-    return chat_completion.choices[0].message.content
-
-things_to_add = input("Add: ")
-print(f"Running: git add {things_to_add}")
-git_command(["git", "add", f"{things_to_add}"])
-print("\n")
-
-if check_staged_changes():
-    diff = get_diff()
-    message = generate_commit_message(diff)
-    print(f"Message will be: {message}")
-    cont = ""
-    while cont != "y" and cont != "n":
-        cont = input("Continue? (y/n) ")
-    if cont == "y":
-        git_command(["git", "commit", "-m", f"\"{message}\""])
-        print("\n")
-        branch = input("Branch: ")
-        print(f"Pushing from origin to {branch}")
         cont = ""
-        while cont != "y" and cont != "n":
-            cont = input("Continue? (y/n) ")
+        while cont not in ("y", "n"):
+            cont = input("Continue with commit? (y/n): ").strip().lower()
         if cont == "y":
-            git_command(["git", "push", "origin", f"{branch}"])
-else:
-    print("No changes to commit")
+            run_git_command(["git", "commit", "-m", message], repo_path)
+            branch = input("Branch to push: ").strip()
+            cont = ""
+            while cont not in ("y", "n"):
+                cont = input(f"Push to {branch}? (y/n): ").strip().lower()
+            if cont == "y":
+                run_git_command(["git", "push", "origin", branch], repo_path)
+    else:
+        print("No staged changes to commit.")
+
+if __name__ == "__main__":
+    main()
