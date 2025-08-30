@@ -25,13 +25,11 @@ def generate_commit_message(diff):
              {
                 "role": "system",
                 "content": '''You are an assistant that writes clear, concise, and professional 
-                Git commit messages based on a provided code diff.\\n\\nGuidelines:\\n- Summarize 
-                the intent of the change in a single line.\\n- Use the imperative mood (e.g., 
-                'fix bug', 'add feature', 'update docs').\\n- If possible, follow the Conventional 
-                Commits style: 'feat:', 'fix:', 'docs:', 'refactor:', 'test:', etc.\\n- Keep the 
-                message under 70 characters.\\n- Do not include file paths or raw diff content 
-                in the commit message.\\n- If the change is unclear, fall back to a generic but 
-                safe description like 'update code'.'''
+                Git commit messages based on a provided code diff.\n\nGuidelines:\n- Summarize 
+                the intent of the change in a single line.\n- Keep the message under 70 characters.
+                \n- Do not include file paths or raw diff content in the commit message.\n- Do not 
+                use prefixes like 'feat:', 'fix:', 'docs:'.\n- If the change is unclear, fall back 
+                to a generic but safe description like 'update code'.'''
             },
             {
                 "role": "user",
@@ -44,10 +42,22 @@ def generate_commit_message(diff):
         temperature=0
     )
     return chat_completion.choices[0].message.content
-
-git_command("git add .")
+things_to_add = input("Add: ")
+print(f"Running: git add {things_to_add}")
+git_command(f"git add {things_to_add}")
+print("\n")
 diff = get_diff()
 message = generate_commit_message(diff)
-git_command(f"git commit -m {message}")
-branch = input("Branch: ")
-git_command(f"git push origin {branch}")
+print(f"Message will be: {message}")
+cont = ""
+while cont != "y" and cont != "n":
+    cont = input("Continue? (y/n) ")
+if cont == "y":
+    git_command(f"git commit -m \"{message}\"")
+    branch = input("Branch: ")
+    print(f"Pushing from origin to {branch}")
+    cont = ""
+    while cont != "y" and cont != "n":
+        cont = input("Continue? (y/n) ")
+    if cont == "y":
+        git_command(f"git push origin {branch}")
