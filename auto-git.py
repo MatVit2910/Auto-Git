@@ -1,4 +1,3 @@
-import os
 from dotenv import load_dotenv
 from git_utils import run_git_command, check_staged_changes, get_staged_diff
 from llm_utils import generate_commit_message
