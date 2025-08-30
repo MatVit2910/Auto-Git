@@ -5,7 +5,8 @@ from llm_utils import generate_commit_message
 load_dotenv()
 
 def main():
-    repo_path = input("Repo path (leave empty for current folder): ").strip() or None
+    #Change this if another using for another repo
+    repo_path = None
     things_to_add = input("Add (file/folder or . for everything): ")
     run_git_command(["git", "add", things_to_add], repo_path)
     print("\n")
