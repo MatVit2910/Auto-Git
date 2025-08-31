@@ -18,7 +18,6 @@ def main():
     if not things_to_add:
         things_to_add = "."
     run_git_command(["git", "add", things_to_add], repo_path)
-    print("\n")
 
     if check_staged_changes(repo_path):
         diff = get_staged_diff(repo_path)
