@@ -25,7 +25,7 @@ def main():
         message = generate_commit_message(diff)
         print(f"Generated commit message:\n{message}\n")
         run_git_command(["git", "commit", "-m", message], repo_path)
-        branch = input("Branch (to push): ").strip()
+        branch = input("Branch to push: ").strip()
 
         #default is main
         if not branch:
