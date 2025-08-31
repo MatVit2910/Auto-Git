@@ -36,4 +36,5 @@ def main():
         print("No staged changes to commit.")
 
 if __name__ == "__main__":
+    #this comment is a test
     main()

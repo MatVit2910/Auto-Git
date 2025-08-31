@@ -18,7 +18,7 @@ def generate_commit_message(diff):
                 - Do not include file paths or raw diff content.
                 - If a TODO comment, the message should start with TODO:
                 - Do not use prefixes like 'feat:', 'fix:', 'docs:'.
-                - If the change is unclear, fall back to a generic safe message like 'update code'."""
+                - If the change is unclear, fall back to a generic safe message like 'update code' or 'added comments'."""
             },
             {
                 "role": "user",
