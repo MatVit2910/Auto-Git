@@ -13,6 +13,8 @@ def main():
     else:
         repo_path = None
     things_to_add = input("Add (file/folder): ")
+    
+    #default is "."
     if not things_to_add:
         things_to_add = "."
     run_git_command(["git", "add", things_to_add], repo_path)
@@ -23,7 +25,9 @@ def main():
         message = generate_commit_message(diff)
         print(f"Generated commit message:\n{message}\n")
         run_git_command(["git", "commit", "-m", message], repo_path)
-        branch = input("Branch to push (default is main): ").strip()
+        branch = input("Branch (to push): ").strip()
+
+        #default is main
         if not branch:
             branch = "main"
             run_git_command(["git", "push", "origin", branch], repo_path)
