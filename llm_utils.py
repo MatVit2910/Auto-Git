@@ -14,8 +14,9 @@ def generate_commit_message(diff):
                 Git commit messages based on a provided code diff.
                 Guidelines:
                 - Summarize the intent of the change in a single line.
+                - Be as specific as possible
                 - Keep the message under 70 characters.
-                - Do not include file paths or raw diff content.
+                - Do not include file paths or raw diff content. Do include relevant file name if only one file was changed.
                 - If a TODO comment, the message should start with TODO:
                 - Do not use prefixes like 'feat:', 'fix:', 'docs:'.
                 - If the change is unclear, fall back to a generic safe message like 'update code' or 'added comments'."""
