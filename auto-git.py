@@ -25,7 +25,7 @@ def main():
         if not branch:
             branch = "main"
             run_git_command(["git", "push", "origin", branch], repo_path)
-            print("Pushed to main!")
+            print(f"Pushed to {branch}!")
     else:
         print("No staged changes to commit.")
 
