@@ -6,4 +6,4 @@
 #### pip install requirements.txt
 
 ### To set up an alias:
-#### alias gpush="python path.../auto-git.py"
+#### alias gpush="python auto-git.py path/to/working/directory (optional)"
