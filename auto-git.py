@@ -1,3 +1,4 @@
+import sys
 from dotenv import load_dotenv
 from git_utils import run_git_command, check_staged_changes, get_staged_diff
 from llm_utils import generate_commit_message
@@ -6,7 +7,10 @@ load_dotenv()
 
 def main():
     #Change this if another using for another repo
-    repo_path = None
+    if len(sys.argv) > 1:
+        repo_path = sys.argv[1]
+    else:
+        repo_path = None
     things_to_add = input("Add (file/folder or . for everything): ")
     run_git_command(["git", "add", things_to_add], repo_path)
     print("\n")
