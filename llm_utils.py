@@ -16,6 +16,7 @@ def generate_commit_message(diff):
                 - Summarize the intent of the change in a single line.
                 - Keep the message under 70 characters.
                 - Do not include file paths or raw diff content.
+                - If a TODO comment, the message should start with TODO:
                 - Do not use prefixes like 'feat:', 'fix:', 'docs:'.
                 - If the change is unclear, fall back to a generic safe message like 'update code'."""
             },

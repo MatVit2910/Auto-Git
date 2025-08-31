@@ -21,13 +21,13 @@ def main():
         print(f"Generated commit message:\n{message}\n")
 
         cont = ""
-        while cont not in ("y", "n"):
+        while cont not in {"y", "n"}:
             cont = input("Continue with commit? (y/n): ").strip().lower()
         if cont == "y":
             run_git_command(["git", "commit", "-m", message], repo_path)
             branch = input("Branch to push: ").strip()
             cont = ""
-            while cont not in ("y", "n"):
+            while cont not in {"y", "n"}:
                 cont = input(f"Push to {branch}? (y/n): ").strip().lower()
             if cont == "y":
                 run_git_command(["git", "push", "origin", branch], repo_path)
