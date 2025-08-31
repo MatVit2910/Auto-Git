@@ -6,7 +6,7 @@ def generate_commit_message(diff):
 
     chat_completion = client.chat.completions.create(
         model="llama-3.3-70b-versatile",
-        temperature=0,
+        temperature=1,
         messages=[
             {
                 "role": "system",

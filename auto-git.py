@@ -6,7 +6,8 @@ from llm_utils import generate_commit_message
 load_dotenv()
 
 def main():
-    #Change this if another using for another repo
+    # use command line arguments to change path of working directory if not current
+    # example: alias gpush="python auto-git.py /home/user/project"
     if len(sys.argv) > 1:
         repo_path = sys.argv[1]
     else:
@@ -20,16 +21,16 @@ def main():
         message = generate_commit_message(diff)
         print(f"Generated commit message:\n{message}\n")
 
-        cont = ""
-        while cont not in {"y", "n"}:
-            cont = input("Continue with commit? (y/n): ").strip().lower()
-        if cont == "y":
+        ans = ""
+        while ans not in {"y", "n"}:
+            ans = input("Continue with commit? (y/n): ").strip().lower()
+        if ans == "y":
             run_git_command(["git", "commit", "-m", message], repo_path)
             branch = input("Branch to push: ").strip()
-            cont = ""
-            while cont not in {"y", "n"}:
-                cont = input(f"Push to {branch}? (y/n): ").strip().lower()
-            if cont == "y":
+            ans = ""
+            while ans not in {"y", "n"}:
+                ans = input(f"Push to {branch}? (y/n): ").strip().lower()
+            if ans == "y":
                 run_git_command(["git", "push", "origin", branch], repo_path)
     else:
         print("No staged changes to commit.")
