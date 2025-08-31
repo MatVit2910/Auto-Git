@@ -12,7 +12,9 @@ def main():
         repo_path = sys.argv[1]
     else:
         repo_path = None
-    things_to_add = input("Add (file/folder or . for everything): ")
+    things_to_add = input("Add (file/folder): ")
+    if not things_to_add:
+        things_to_add = "."
     run_git_command(["git", "add", things_to_add], repo_path)
     print("\n")
 
