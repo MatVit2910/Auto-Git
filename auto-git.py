@@ -29,11 +29,8 @@ def main():
             branch = input("Branch to push (default is main): ").strip()
             if not branch:
                 branch = "main"
-            ans = ""
-            while ans not in {"y", "n"}:
-                ans = input(f"Push to {branch}? (y/n): ").strip().lower()
-            if ans == "y":
                 run_git_command(["git", "push", "origin", branch], repo_path)
+                print("Pushed to main!")
     else:
         print("No staged changes to commit.")
 
