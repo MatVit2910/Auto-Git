@@ -21,16 +21,13 @@ def main():
         message = generate_commit_message(diff)
         print(f"Generated commit message:\n{message}\n")
 
-        ans = ""
-        while ans not in {"y", "n"}:
-            ans = input("Continue with commit? (y/n): ").strip().lower()
-        if ans == "y":
-            run_git_command(["git", "commit", "-m", message], repo_path)
-            branch = input("Branch to push (default is main): ").strip()
-            if not branch:
-                branch = "main"
-                run_git_command(["git", "push", "origin", branch], repo_path)
-                print("Pushed to main!")
+       
+        run_git_command(["git", "commit", "-m", message], repo_path)
+        branch = input("Branch to push (default is main): ").strip()
+        if not branch:
+            branch = "main"
+            run_git_command(["git", "push", "origin", branch], repo_path)
+            print("Pushed to main!")
     else:
         print("No staged changes to commit.")
 
