@@ -6,7 +6,7 @@ def generate_commit_message(diff):
 
     chat_completion = client.chat.completions.create(
         model="llama-3.3-70b-versatile",
-        temperature=1,
+        temperature=0,
         messages=[
             {
                 "role": "system",
@@ -22,7 +22,7 @@ def generate_commit_message(diff):
             },
             {
                 "role": "user",
-                "content": f"Here is the staged git diff:\n\n{diff}\n\nWrite a single commit message. Only output the commit message."
+                "content": f"Here is the staged git diff:\n\n{diff}\n\nOnly output the commit message."
             }
         ]
     )
