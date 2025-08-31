@@ -20,8 +20,6 @@ def main():
         diff = get_staged_diff(repo_path)
         message = generate_commit_message(diff)
         print(f"Generated commit message:\n{message}\n")
-
-       
         run_git_command(["git", "commit", "-m", message], repo_path)
         branch = input("Branch to push (default is main): ").strip()
         if not branch:
