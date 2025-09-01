@@ -1,6 +1,6 @@
 import sys
 from dotenv import load_dotenv
-from git_utils import run_git_command, check_staged_changes, get_staged_diff
+from git_utils import run_git_command, check_staged_changes
 from llm_utils import generate_commit_message
 
 load_dotenv()
@@ -21,7 +21,7 @@ def main():
     print()
 
     if check_staged_changes(repo_path):
-        diff = get_staged_diff(repo_path)
+        diff = run_git_command(["git", "diff", "--cached"], repo_path)
         message = generate_commit_message(diff)
         print(f"Generated commit message:\n{message}\n")
         run_git_command(["git", "commit", "-m", message], repo_path)

@@ -19,5 +19,3 @@ def check_staged_changes(repo_path=None):
     )
     return result.returncode != 0
 
-def get_staged_diff(repo_path=None):
-    return run_git_command(["git", "diff", "--cached"], repo_path)
