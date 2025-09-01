@@ -30,6 +30,7 @@ def main():
         #default is main
         if not branch:
             branch = "main"
+            
         run_git_command(["git", "push", "origin", branch], repo_path)
         print(f"Pushed to {branch}!")
     else:
