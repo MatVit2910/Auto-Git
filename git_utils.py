@@ -1,7 +1,6 @@
 import subprocess
 
 def run_git_command(cmd, repo_path=None):
-    """Run a git command in the given repo path (default = current directory)."""
     result = subprocess.run(
         cmd,
         cwd=repo_path,
