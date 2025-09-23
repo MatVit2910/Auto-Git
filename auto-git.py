@@ -35,5 +35,6 @@ def main():
     else:
         print("No staged changes to commit.")
 
+#TODO: ADD MATH FUNCTION
 if __name__ == "__main__":
     main()
