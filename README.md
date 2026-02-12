@@ -1,4 +1,4 @@
-# 🚀 Auto-Git
+# Auto-Git
 
 **Auto-Git** is a Python-based automation tool designed to streamline your development workflow by handling the `git add`, `git commit`, and `git push` cycle in a single command. It includes LLM integration to help generate meaningful commit messages automatically.
 
