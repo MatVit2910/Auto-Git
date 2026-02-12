@@ -6,8 +6,6 @@
 * [Features](#features)
 * [Installation](#installation)
 * [Usage](#usage)
-* [Project Structure](#project-structure)
-* [Contact](#contact)
 
 ---
 
@@ -20,6 +18,28 @@
 Clone the repository and install the necessary dependencies:
 
 ```bash
-git clone [https://github.com/MatVit2910/Auto-Git.git](https://github.com/MatVit2910/Auto-Git.git)
+git clone https://github.com/MatVit2910/Auto-Git.git
 cd Auto-Git
 pip install -r requirements.txt
+```
+
+## Usage
+To make the tool accessible from anywhere, set up a terminal alias:
+
+**For Bash/Zsh:**
+
+Add this line to your `.bashrc` or `.zshrc` file:
+
+```bash
+alias gpush="python /path/to/your/Auto-Git/auto-git.py"
+```
+
+**Running the Script:**
+
+```bash
+# In your working directory
+gpush
+
+# Or specify a specific directory
+gpush path/to/project
+```
