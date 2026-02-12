@@ -43,3 +43,6 @@ gpush
 # Or specify a specific directory
 gpush path/to/project
 ```
+
+<img width="1473" height="925" alt="image" src="https://github.com/user-attachments/assets/7ab6c059-2ed8-49ca-8f6c-8c2757075d16" />
+
